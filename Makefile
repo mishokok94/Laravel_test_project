@@ -5,8 +5,8 @@ SAIL = ./vendor/bin/sail
 
 # initialization
 init:
-	@echo "🚀 Initializing the Laravel project..."
-	@docker-compose up -d --build
+	@echo "Initializing the Laravel project..."
+	@$(SAIL) up -d --build
 	@$(SAIL) artisan key:generate
 	@$(SAIL) artisan migrate --seed
 	@$(SAIL) artisan storage:link
@@ -16,6 +16,7 @@ init:
 	@$(SAIL) composer install
 	@$(SAIL) npm install
 	@$(SAIL) npm run dev
+	@$(SAIL) artisan currency:update
 	@echo "Laravel project setup completed!"
 
 
