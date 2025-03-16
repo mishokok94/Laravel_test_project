@@ -11,10 +11,13 @@
             Change Base Currency
         </button>
     </div>
-    <div>
+    <div class="flex items-center">
         @auth
             <span class="mr-4">Welcome, {{ auth()->user()->name }} enjoy fresh currency data</span>
-            <a href="{{ route('logout') }}" class="px-4 py-2 bg-red-500 rounded">Logout</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="px-4 py-2 bg-red-500 rounded">Logout</button>
+            </form>
         @else
             <a href="{{ route('login') }}" class="px-4 py-2 bg-blue-500 rounded">Login</a>
             <a href="{{ route('register') }}" class="px-4 py-2 bg-green-500 rounded ml-2">Register</a>

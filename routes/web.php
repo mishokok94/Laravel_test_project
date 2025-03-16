@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
         return redirect('/admin');
     })->name('dashboard');
 });
-
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
 Route::get('/currency-rates', [CurrencyRateController::class, 'index'])->name('currency-rates.index');
 
 require __DIR__.'/auth.php';
