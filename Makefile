@@ -16,7 +16,18 @@ init:
 	@$(SAIL) composer install
 	@$(SAIL) npm install
 	@$(SAIL) npm run dev
-	@echo " Laravel project setup completed!"
+	@echo "Laravel project setup completed!"
+
+
+# сcomposer install
+composer-install:
+	@echo "Installing Composer dependencies..."
+	@docker run --rm \
+	  -v $(PWD):/app \
+	  -w /app \
+	  laravelsail/php82-composer:latest \
+	  composer install --ignore-platform-reqs
+	@echo "Composer dependencies installed!"
 
 # migration start
 migrate:
