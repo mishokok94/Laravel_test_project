@@ -28,8 +28,9 @@ class UpdateCurrencyRates extends Command
      */
     public function handle()
     {
+        $baseCurrency = session('base_currency', 'USD');
         $apiKey = env('EXCHANGE_RATE_API_KEY');
-        $response = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/USD");
+        $response = Http::get("https://v6.exchangerate-api.com/v6/{$apiKey}/latest/{$baseCurrency}");
 
         if ($response->failed()) {
             $this->error('Error API request. ');
@@ -45,7 +46,8 @@ class UpdateCurrencyRates extends Command
 
         foreach ($data['conversion_rates'] as $currency => $rate) {
             CurrencyRate::updateOrCreate(
-                ['base_currency' => 'USD', 'target_currency' => $currency],
+                [   'base_currency' => $baseCurrency,
+                    'target_currency' => $currency],
                 ['rate' => $rate, 'fetched_at' => now()]
             );
         }
